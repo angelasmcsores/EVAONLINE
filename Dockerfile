@@ -6,7 +6,7 @@
 # ===========================================
 # Stage 1: Builder - Production Dependencies
 # ===========================================
-FROM python:3.12-slim AS builder-prod
+FROM python:3.12-slim-alpine AS builder-prod
 
 # Metadata para melhor rastreabilidade da imagem
 LABEL maintainer="Ângela Cunha Soares <angelassilviane@gmail.com>"
@@ -16,25 +16,20 @@ LABEL description="Builder stage for production dependencies"
 # Configurar diretório de trabalho para o build
 WORKDIR /build
 
-# Instalar dependências de compilação PRIMEIRO
-# Isso é ESSENCIAL para compilar pacotes como psycopg2, pandas, etc.
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential \
+# Instalar dependências de compilação APENAS para build
+RUN apk add --no-cache --virtual .build-deps \
+    postgresql-dev \
     gcc \
-    g++ \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+    musl-dev \
+    linux-headers
 
-# Copiar APENAS pyproject.toml primeiro para otimizar cache
-# Se pyproject.toml não mudar, o cache é reutilizado
-COPY pyproject.toml .
-
-# Instalar projeto e dependências de produção do pyproject.toml
-# --user instala no diretório do usuário para fácil cópia entre stages
+# Instalar projeto e dependências de produção em diretório isolado
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --user .
+    pip install --no-cache-dir --target /dependencies .
+
+# Limpar dependências de compilação (reduz tamanho do builder)
+RUN apk del .build-deps && \
+    rm -rf /var/cache/apk/*
 
 # ===========================================
 # Stage 1B: Builder - Development Dependencies
@@ -50,7 +45,7 @@ RUN pip install --no-cache-dir --user .[dev]
 # ===========================================
 # Stage 2: Runtime (Production) - IMAGEM FINAL LEVE
 # ===========================================
-FROM python:3.12-slim AS runtime
+FROM python:3.12-slim-alpine AS runtime
 
 # Metadata da imagem final
 LABEL maintainer="Ângela Cunha Soares <angelassilviane@gmail.com>"
@@ -58,44 +53,33 @@ LABEL stage="runtime"
 LABEL description="Production runtime image for EVAonline"
 
 # Instalar APENAS dependências essenciais de runtime
-# Removemos build-essential, gcc, g++ para imagem mais segura e leve
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    # Para health checks e wait-for-service
-    netcat-traditional \
-    # Cliente PostgreSQL
-    libpq5 \
-    # Para health checks
-    curl \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+RUN apk add --no-cache \
+    # Runtime do PostgreSQL
+    postgresql-libs \
+    # Para health checks (versão Alpine)
+    curl
 
-# Criar usuário não-root para segurança
-RUN useradd -m -u 1000 -s /bin/bash evaonline
+# Criar usuário não-root para segurança (Alpine)
+RUN adduser -D -u 1000 -s /bin/sh evaonline
+
 
 # Configurar variáveis de ambiente para otimização Python
-# Logs em tempo real
 ENV PYTHONUNBUFFERED=1 \
-    # Não criar arquivos .pyc
     PYTHONDONTWRITEBYTECODE=1 \
-    # Path para imports
-    PYTHONPATH=/app \
-    # Incluir .local/bin no PATH
-    PATH="/home/evaonline/.local/bin:${PATH}" \
-    # Timezone padrão
+    PYTHONPATH=/app:/dependencies \
+    PATH="/dependencies/bin:${PATH}" \
     TZ=America/Sao_Paulo
 
 WORKDIR /app
 
-#  Criar diretórios ANTES de copiar arquivos
+# Criar diretórios ANTES de copiar arquivos
 RUN mkdir -p /app/logs /app/data /app/temp && \
     chown -R evaonline:evaonline /app
 
-# Copiar APENAS dependências do builder de produção
-# Isso evita ferramentas de desenvolvimento na imagem final
-COPY --from=builder-prod --chown=evaonline:evaonline /root/.local /home/evaonline/.local
+# Copiar APENAS dependências de produção (não inclui dev tools)
+COPY --from=builder-prod --chown=evaonline:evaonline /dependencies /dependencies
 
-# Copiar entrypoint do local correto
+# Copiar entrypoint
 COPY --chown=evaonline:evaonline docker/backend/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
@@ -127,6 +111,9 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 # Entrypoint para inicialização flexível
 ENTRYPOINT ["/entrypoint.sh"]
 
+# Comando padrão para produção
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
 # ===========================================
 # Stage 3: Development - Hot Reload e Debug
 # ===========================================
@@ -136,18 +123,15 @@ LABEL stage="development"
 LABEL description="Development image com hot-reload"
 
 # Copiar dependências de desenvolvimento SOBRESCREVENDO produção
-# Isso adiciona pytest, black, ruff, etc. sem afetar o stage runtime
-COPY --from=builder-dev --chown=evaonline:evaonline /root/.local /home/evaonline/.local
+COPY --from=builder-dev --chown=evaonline:evaonline /dependencies-dev /dependencies
 
 USER evaonline
 
 # Variáveis de ambiente para desenvolvimento
-# Ativar hot-reload
 ENV RELOAD=true \
-    # Ambiente desenvolvimento
     ENVIRONMENT=development \
-    # Logs detalhados
-    LOG_LEVEL=DEBUG
+    LOG_LEVEL=DEBUG \
+    PYTHONPATH=/app:/dependencies
 
 # Comando padrão para desenvolvimento com hot-reload
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
@@ -160,23 +144,20 @@ FROM development AS testing
 LABEL stage="testing"
 LABEL description="Testing image com pytest"
 
-# Instalar ferramentas adicionais para testes ANTES de trocar user
+# Instalar ferramentas adicionais para testes
 USER root
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    netcat-traditional \
-    redis-tools \
+RUN apk add --no-cache \
+    # Ferramentas para testes de integração
     postgresql-client \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+    redis
 
 USER evaonline
 
 # Copiar testes
 COPY --chown=evaonline:evaonline backend/tests/ ./backend/tests/
 
-# Copiar entrypoint dos testes
+# Copiar entrypoint dos testes (se existir)
 COPY --chown=evaonline:evaonline docker/docker-entrypoint-tests.sh /entrypoint-tests.sh
 RUN chmod +x /entrypoint-tests.sh
 
@@ -186,3 +167,6 @@ ENV ENVIRONMENT=testing \
 
 # Entrypoint para execução de testes
 ENTRYPOINT ["/entrypoint-tests.sh"]
+
+# Fallback para execução direta de testes
+CMD ["pytest", "-v", "--tb=short", "--color=yes"]

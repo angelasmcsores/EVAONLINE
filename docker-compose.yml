@@ -6,9 +6,10 @@
 services:
   # =====================================================
   # PostgreSQL Database with PostGIS
+  # Tags: https://hub.docker.com/r/postgis/postgis/tags?name=alpine&page=2
   # =====================================================
   postgres:
-    image: postgis/postgis:16-3.4
+    image: postgis/postgis:16-3.4-alpine
     container_name: evaonline-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-evaonline}
@@ -337,9 +338,10 @@ services:
 
   # =====================================================
   # Prometheus - Métricas (acesso direto)
+  # Tags: https://hub.docker.com/r/bitnami/prometheus
   # =====================================================
   prometheus:
-    image: prom/prometheus:latest
+    image: bitnami/prometheus:latest
     container_name: evaonline-prometheus
     volumes:
       - ./docker/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -358,9 +360,10 @@ services:
 
   # =====================================================
   # Grafana - Dashboards (acesso direto)
+  # Tags: https://hub.docker.com/r/grafana/grafana/tags
   # =====================================================
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:main-ubuntu
     container_name: evaonline-grafana
     volumes:
       - grafana_data:/var/lib/grafana

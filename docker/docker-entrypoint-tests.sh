@@ -1,19 +1,21 @@
 #!/bin/bash
 # ============================================================================
-# ENTRYPOINT PARA TESTES - EVAonline
+# ENTRYPOINT PARA TESTES - EVAonline (Pytest)
 # ============================================================================
-# Este script executa todos os testes do backend dentro do container Docker
+# Este script executa todos os testes do backend com pytest + coverage
 # Usado pelo serviço test-runner no docker-compose.yml
 
 set -e  # Exit on error
 
 echo "============================================================================"
-echo "🧪 SISTEMA DE TESTES - EVAonline"
+echo "🧪 SISTEMA DE TESTES - EVAonline (Pytest Framework)"
 echo "============================================================================"
 echo ""
 echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "Container ID: $(hostname)"
 echo "Ambiente: ${ENVIRONMENT:-testing}"
+echo "Python: $(python --version)"
+echo "Pytest: $(pytest --version)"
 echo ""
 
 # ============================================================================
@@ -68,52 +70,69 @@ fi
 echo ""
 
 # ============================================================================
-# EXECUTAR TESTES
+# EXECUTAR TESTES COM PYTEST
 # ============================================================================
 
 echo "============================================================================"
-echo "🧪 INICIANDO TESTES"
+echo "🧪 INICIANDO TESTES COM PYTEST"
 echo "============================================================================"
 echo ""
 
-# Contador de testes
-TESTS_PASSED=0
-TESTS_FAILED=0
+# Detectar tipo de teste solicitado (via variável de ambiente)
+TEST_TYPE="${TEST_TYPE:-all}"
 
-# Array de testes
-declare -a TESTS=(
-    "backend/tests/test_backend_audit.py:Auditoria Backend (14 testes)"
-    "backend/tests/test_routes.py:Teste de Rotas (40+ endpoints)"
-    "backend/tests/test_database.py:Teste do Banco (7 testes)"
-    "backend/tests/test_performance.py:Teste de Performance (5 testes)"
-)
+case "$TEST_TYPE" in
+    "unit")
+        echo "📦 Rodando apenas TESTES UNITÁRIOS..."
+        PYTEST_ARGS="backend/tests/unit/ -m unit"
+        ;;
+    "integration")
+        echo "🔗 Rodando apenas TESTES DE INTEGRAÇÃO..."
+        PYTEST_ARGS="backend/tests/integration/ -m integration"
+        ;;
+    "e2e")
+        echo "🌐 Rodando apenas TESTES E2E..."
+        PYTEST_ARGS="backend/tests/e2e/ -m e2e"
+        ;;
+    "performance")
+        echo "⚡ Rodando apenas TESTES DE PERFORMANCE..."
+        PYTEST_ARGS="backend/tests/performance/ -m performance"
+        ;;
+    "security")
+        echo "🔒 Rodando apenas TESTES DE SEGURANÇA..."
+        PYTEST_ARGS="backend/tests/security/ -m security"
+        ;;
+    "critical")
+        echo "🔥 Rodando apenas TESTES CRÍTICOS (unit + integration)..."
+        PYTEST_ARGS="backend/tests/unit/ backend/tests/integration/ -m 'unit or integration'"
+        ;;
+    "fast")
+        echo "⚡ Rodando apenas TESTES RÁPIDOS (excluindo slow)..."
+        PYTEST_ARGS="backend/tests/ -m 'not slow'"
+        ;;
+    *)
+        echo "🎯 Rodando TODOS OS TESTES..."
+        PYTEST_ARGS="backend/tests/"
+        ;;
+esac
 
-# Executar cada teste
-for test_info in "${TESTS[@]}"; do
-    IFS=':' read -r test_script test_desc <<< "$test_info"
-    
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo "▶️  $test_desc"
-    echo "   Arquivo: $test_script"
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo ""
-    
-    if [ -f "$test_script" ]; then
-        if python "$test_script"; then
-            echo ""
-            echo "✅ $test_desc - PASSOU"
-            TESTS_PASSED=$((TESTS_PASSED + 1))
-        else
-            echo ""
-            echo "❌ $test_desc - FALHOU"
-            TESTS_FAILED=$((TESTS_FAILED + 1))
-        fi
-    else
-        echo "⚠️  Arquivo não encontrado: $test_script"
-    fi
-    
-    echo ""
-done
+# Executar pytest com coverage
+pytest $PYTEST_ARGS \
+    --verbose \
+    --color=yes \
+    --tb=short \
+    --cov=backend \
+    --cov-report=term-missing \
+    --cov-report=html:htmlcov \
+    --cov-report=xml:coverage.xml \
+    --junit-xml=junit.xml \
+    --maxfail=5 \
+    --durations=10
+
+# Capturar código de saída
+EXIT_CODE=$?
+
+echo ""
 
 # ============================================================================
 # RESUMO FINAL
@@ -123,17 +142,23 @@ echo "==========================================================================
 echo "📊 RESUMO DOS TESTES"
 echo "============================================================================"
 echo ""
-echo "✅ Testes aprovados: $TESTS_PASSED"
-echo "❌ Testes falhados: $TESTS_FAILED"
-echo "📊 Total: $((TESTS_PASSED + TESTS_FAILED))"
-echo ""
 
-if [ $TESTS_FAILED -eq 0 ]; then
+if [ $EXIT_CODE -eq 0 ]; then
     echo "🎉 TODOS OS TESTES PASSARAM!"
     echo "   Backend está operacional e pronto para uso."
+    echo ""
+    echo "📈 Relatórios gerados:"
+    echo "   - HTML: htmlcov/index.html"
+    echo "   - XML: coverage.xml"
+    echo "   - JUnit: junit.xml"
     exit 0
 else
-    echo "⚠️  $TESTS_FAILED TESTE(S) FALHARAM"
+    echo "⚠️  ALGUNS TESTES FALHARAM (exit code: $EXIT_CODE)"
     echo "   Verifique os erros acima."
-    exit 1
+    echo ""
+    echo "💡 Dicas:"
+    echo "   - Use TEST_TYPE=unit para rodar só testes unitários"
+    echo "   - Use TEST_TYPE=fast para pular testes lentos"
+    echo "   - Veja htmlcov/index.html para coverage detalhado"
+    exit $EXIT_CODE
 fi

@@ -231,19 +231,19 @@ class ClimateSourceSelector:
         return {
             "openmeteo_archive": {
                 "coverage": "global",
-                "period": "1940-01-01 to today-2d",
+                "period": "1990-01-01 to today-2d",
                 "license": "CC-BY-4.0",
-                "description": "Historical weather data (1940-present)",
+                "description": "Historical weather data (1990-present)",
             },
             "openmeteo_forecast": {
                 "coverage": "global",
                 "period": "today-30d to today+5d",
                 "license": "CC-BY-4.0",
-                "description": "Forecast weather data (up to 16 days)",
+                "description": "Forecast weather data (up to 5 days)",
             },
             "nasa_power": {
                 "coverage": "global",
-                "period": "1981-01-01 to today-2-7d",
+                "period": "1990-01-01 to today-2-7d",
                 "license": "Public Domain",
                 "description": "NASA POWER meteorological data",
             },

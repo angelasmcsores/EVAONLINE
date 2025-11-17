@@ -1,5 +1,6 @@
 """
-Performance and load tests for EVAonline backend.
+Performance Tests - Testes de Performance
 
-Includes stress tests, throughput analysis, and latency measurements.
+Testes de performance e benchmarks de queries/APIs críticas.
+Target: 1-2% coverage
 """

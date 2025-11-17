@@ -1,9 +1,11 @@
 """
-Backend tests package for EVAonline.
+Backend Tests Package - EVAonline
 
-This package contains all automated tests for the backend services,
-following best practices for Python testing with pytest.
+Estrutura de Testes:
+- unit/: Testes unitários (70% cobertura)
+- integration/: Testes de integração (25% cobertura)
+- e2e/: Testes end-to-end (5% cobertura)
+- performance/: Testes de performance
+- fixtures/: Dados de teste compartilhados
+- helpers/: Utilitários de teste
 """
-
-__version__ = "1.0.0"
-__author__ = "EVAonline Team"

@@ -1,3 +1,0 @@
-"""
-Test documentation and guides.
-"""

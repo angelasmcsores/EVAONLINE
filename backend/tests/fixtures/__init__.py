@@ -1,5 +1,5 @@
 """
-Fixtures and test configuration for EVAonline backend tests.
+Test Fixtures - Dados de Teste
 
-Provides shared test data, mocks, and configuration.
+Fixtures compartilhadas para testes (climate data, API responses, DB seeds).
 """

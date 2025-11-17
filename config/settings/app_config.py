@@ -304,7 +304,7 @@ class Settings(BaseSettings):
     @classmethod
     def validate_environment(cls, v: str) -> str:
         """Valida o ambiente."""
-        valid_envs = ["development", "staging", "production"]
+        valid_envs = ["development", "staging", "production", "testing"]
         if v.lower() not in valid_envs:
             raise ValueError(
                 f"ENVIRONMENT deve ser um de: {', '.join(valid_envs)}"
@@ -325,6 +325,11 @@ class Settings(BaseSettings):
     def is_staging(self) -> bool:
         """Verifica se está em staging."""
         return self.ENVIRONMENT == "staging"
+
+    @property
+    def is_testing(self) -> bool:
+        """Verifica se está em testing."""
+        return self.ENVIRONMENT == "testing"
 
 
 @lru_cache

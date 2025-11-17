@@ -1,5 +1,6 @@
 """
-Integration tests for EVAonline backend.
+Integration Tests - Testes de Integração
 
-Tests API endpoints, database operations, and service integration.
+Testes de interação entre componentes (API, Database, Redis, External APIs).
+Target: 25% coverage
 """

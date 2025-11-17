@@ -45,9 +45,7 @@ def upgrade() -> None:
     - metadata: Dados adicionais (JSONB)
     """
 
-    # Garantir que PostGIS está habilitado
-    op.execute("CREATE EXTENSION IF NOT EXISTS postgis")
-
+    # PostGIS já foi criado pela migração 001
     # Criar tabela regional_coverage
     op.create_table(
         "regional_coverage",
@@ -118,18 +116,15 @@ def upgrade() -> None:
     )
 
     # Criar índice espacial (GIST) para queries rápidas
-    op.create_index(
-        "idx_regional_coverage_geometry",
-        "regional_coverage",
-        ["geometry"],
-        postgresql_using="gist",
+    op.execute(
+        "CREATE INDEX IF NOT EXISTS idx_regional_coverage_geometry "
+        "ON regional_coverage USING gist (geometry)"
     )
 
     # Criar índice em region_id
-    op.create_index(
-        "idx_regional_coverage_region_id",
-        "regional_coverage",
-        ["region_id"],
+    op.execute(
+        "CREATE INDEX IF NOT EXISTS idx_regional_coverage_region_id "
+        "ON regional_coverage (region_id)"
     )
 
     # Inserir seeds das regiões

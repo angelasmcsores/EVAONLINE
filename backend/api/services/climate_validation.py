@@ -576,6 +576,3 @@ class ClimateValidationService:
             "Todas as validações passaram"
         )
         return True, {"all_valid": True, "details": details}
-
-
-# Removido singleton desnecessário: classe é stateless, use diretamente

@@ -80,7 +80,7 @@ class WeatherConversionUtils:
         """
         Converte temperatura de Fahrenheit para Celsius.
 
-        Fórmula: °C = (°F - 32) × 5/9
+        Fórmula: °C = (°F - 32) x 5/9
 
         Args:
             fahrenheit: Temperatura em °F
@@ -97,7 +97,7 @@ class WeatherConversionUtils:
         """
         Converte temperatura de Celsius para Fahrenheit.
 
-        Fórmula: °F = °C × 9/5 + 32
+        Fórmula: °F = °C x 9/5 + 32
 
         Args:
             celsius: Temperatura em °C
@@ -190,20 +190,25 @@ class WeatherValidationUtils:
     # LIMITES GLOBAIS (Mundo inteiro)
     # Baseado em records mundiais e limites físicos
     # ═══════════════════════════════════════════════════════════════
-    TEMP_MIN = -100.0  # °C (Record mundial: -89.2°C)
-    TEMP_MAX = 60.0  # °C (Record mundial: 56.7°C)
-    HUMIDITY_MIN = 0.0  # %
-    HUMIDITY_MAX = 100.0  # %
-    WIND_MIN = 0.0  # m/s
-    WIND_MAX = 113.0  # m/s (~408 km/h, furacão categoria 5)
-    PRECIP_MIN = 0.0  # mm
-    PRECIP_MAX = 2000.0  # mm/dia (record: ~1825mm)
-    SOLAR_MIN = 0.0  # MJ/m²/dia
-    SOLAR_MAX = 45.0  # MJ/m²/dia (limite teórico)
+    TEMP_MIN = (
+        -90.0
+    )  # °C (Record mundial: -89.2°C: https://svs.gsfc.nasa.gov/4126/)
+    TEMP_MAX = 60.0  # °C (Record mundial: 56.7°C: https://www.ncei.noaa.gov/news/earths-hottest-temperature)
+    HUMIDITY_MIN = 0.0  # % (https://www.psu.edu/news/research/story/humans-cant-endure-temperatures-and-humidities-high-previously-thought)
+    HUMIDITY_MAX = 100.0  # % (https://www.psu.edu/news/research/story/humans-cant-endure-temperatures-and-humidities-high-previously-thought)
+    WIND_MIN = (
+        0.0  # m/s (https://mountwashington.org/remembering-the-big-wind/)
+    )
+    WIND_MAX = 120.0  # m/s (~432 km/h, furacão categoria 5: https://mountwashington.org/remembering-the-big-wind/)
+    PRECIP_MIN = 0.0  # mm (https://www.weather.gov/owp/hdsc_world_record)
+    PRECIP_MAX = 2000.0  # mm/dia (record: ~1825mm: (https://www.weather.gov/owp/hdsc_world_record)
+    SOLAR_MIN = 0.0  # MJ/m²/dia (https://www.bom.gov.au/climate/austmaps/metadata-daily-solar-exposure.shtml)
+    SOLAR_MAX = 35.0  # MJ/m²/dia (https://www.bom.gov.au/climate/austmaps/metadata-daily-solar-exposure.shtml)
 
     # ═══════════════════════════════════════════════════════════════
     # LIMITES BRASIL (Xavier et al. 2016, 2022)
     # "New improved Brazilian daily weather gridded data (1961–2020)"
+    # https://rmets.onlinelibrary.wiley.com/doi/abs/10.1002/joc.7731
     # Validações mais rigorosas para dados brasileiros
     # ═══════════════════════════════════════════════════════════════
     BRAZIL_TEMP_MIN = -30.0  # °C (limites Xavier)

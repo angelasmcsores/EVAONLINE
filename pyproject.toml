@@ -114,7 +114,10 @@ dev = [
     "pytest-cov>=7.0.0",
     "pytest-asyncio>=1.2.0",
     "pytest-mock>=3.15.1",
-    "faker>=37.12.0",
+    "pytest-faker>=2.0.0",
+    "faker>=38.0.0",
+    "factory-boy>=3.3.3",
+    "schemathesis>=4.5.2",
 
     # Code Quality & Formatting (atualizado)
     "black>=25.9.0",
@@ -157,7 +160,10 @@ test = [
     "pytest-cov>=5.0.0",
     "pytest-asyncio>=1.2.0",
     "pytest-timeout>=2.3.1",
-    "faker>=37.12.0",
+    "pytest-mock>=3.15.1",
+    "faker>=38.0.0",
+    "factory-boy>=3.3.3",
+    "schemathesis>=4.5.2",
 ]
 
 # (atualizado)

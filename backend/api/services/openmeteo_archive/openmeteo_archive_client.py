@@ -15,6 +15,7 @@ Open-Meteo is open-source
 Source code is available on GitHub under the GNU Affero General
 Public Licence Version 3 AGPLv3 or any later version.
 GitHub Open-Meteo: https://github.com/open-meteo/open-meteo
+Historical Weather API: https://open-meteo.com/en/docs/historical-weather-api
 
 Variables (10):
 - Temperature: mean, max, min (°C)
