@@ -27,7 +27,7 @@ eto_layout = html.Div(
                         dbc.Col(
                             [
                                 html.H1(
-                                    "📊 Calculadora ETo",
+                                    "📊 ETo Calculator",
                                     className="text-center mb-3",
                                     style={
                                         "color": "#2c3e50",
@@ -35,7 +35,7 @@ eto_layout = html.Div(
                                     },
                                 ),
                                 html.P(
-                                    "Calcule a Evapotranspiração de Referência (ET₀) usando o método FAO-56 Penman-Monteith",
+                                    "Calculate Reference Evapotranspiration (ET₀) using the FAO-56 Penman-Monteith method",
                                     className="text-center lead text-muted mb-4",
                                 ),
                             ],
@@ -53,7 +53,7 @@ eto_layout = html.Div(
                                         dbc.CardHeader(
                                             [
                                                 html.H6(
-                                                    "📍 Localização",
+                                                    "📍 Location",
                                                     className="mb-0",
                                                 )
                                             ]
@@ -65,11 +65,11 @@ eto_layout = html.Div(
                                                     id="location-mode-radio",
                                                     options=[
                                                         {
-                                                            "label": "🗺️ Usar coordenadas do mapa",
+                                                            "label": "🗺️ Use map coordinates",
                                                             "value": "map",
                                                         },
                                                         {
-                                                            "label": "✍️ Inserir coordenadas manualmente",
+                                                            "label": "✍️ Enter coordinates manually",
                                                             "value": "manual",
                                                         },
                                                     ],
@@ -107,7 +107,7 @@ eto_layout = html.Div(
                                         dbc.CardHeader(
                                             [
                                                 html.H6(
-                                                    "🌐 Fonte de Dados Climáticos",
+                                                    "🌐 Climate Data Source",
                                                     className="mb-0",
                                                 )
                                             ]
@@ -120,7 +120,7 @@ eto_layout = html.Div(
                                                 ),
                                                 dbc.Select(
                                                     id="climate-source-dropdown",
-                                                    placeholder="Selecione a fonte de dados...",
+                                                    placeholder="Select the data source...",
                                                     disabled=True,
                                                     className="mb-2",
                                                 ),
@@ -149,7 +149,7 @@ eto_layout = html.Div(
                                         dbc.CardHeader(
                                             [
                                                 html.H5(
-                                                    "⚙️ Configurações do Cálculo",
+                                                    "⚙️ Calculation Settings",
                                                     className="mb-0",
                                                 )
                                             ]
@@ -158,7 +158,7 @@ eto_layout = html.Div(
                                             [
                                                 # Radio buttons: Dados Históricos vs Dados Atuais
                                                 html.Label(
-                                                    "Tipo de Dados:",
+                                                    "Data Type:",
                                                     className="fw-bold mb-3",
                                                     style={
                                                         "fontSize": "1.1rem"
@@ -168,11 +168,11 @@ eto_layout = html.Div(
                                                     id="data-type-radio",
                                                     options=[
                                                         {
-                                                            "label": "📅 Dados Históricos (1940 - hoje)",
+                                                            "label": "📅 Historical Data (1990 - today)",
                                                             "value": "historical",
                                                         },
                                                         {
-                                                            "label": "🌤️ Dados Atuais (últimos 7 dias)",
+                                                            "label": "🌤️ Current Data (last 7 days)",
                                                             "value": "current",
                                                         },
                                                     ],
@@ -192,7 +192,7 @@ eto_layout = html.Div(
                                                         html.I(
                                                             className="bi bi-calculator me-2"
                                                         ),
-                                                        "CALCULAR ETO",
+                                                        "CALCULATE ETO",
                                                     ],
                                                     id="calculate-eto-btn",
                                                     color="success",
@@ -227,7 +227,7 @@ eto_layout = html.Div(
                                         dbc.CardHeader(
                                             [
                                                 html.H6(
-                                                    "🔬 Método FAO-56",
+                                                    "🔬 FAO-56 Method",
                                                     className="mb-0",
                                                 )
                                             ]
@@ -235,23 +235,22 @@ eto_layout = html.Div(
                                         dbc.CardBody(
                                             [
                                                 html.P(
-                                                    "O método Penman-Monteith FAO-56 é o padrão internacional "
-                                                    "para cálculo de evapotranspiração de referência (ET₀).",
+                                                    "The FAO-56 Penman-Monteith method is the international standard for calculating reference evapotranspiration (ET₀).",
                                                     className="small",
                                                 ),
                                                 html.P(
                                                     [
                                                         html.Strong(
-                                                            "Parâmetros necessários:"
+                                                            "Required parameters:"
                                                         ),
                                                         html.Br(),
-                                                        "• Temperatura do ar",
+                                                        "• Air temperature",
                                                         html.Br(),
-                                                        "• Umidade relativa",
+                                                        "• Relative humidity",
                                                         html.Br(),
-                                                        "• Velocidade do vento",
+                                                        "• Wind speed",
                                                         html.Br(),
-                                                        "• Radiação solar",
+                                                        "• Solar radiation",
                                                     ],
                                                     className="small mb-0",
                                                 ),
@@ -266,7 +265,7 @@ eto_layout = html.Div(
                                         dbc.CardHeader(
                                             [
                                                 html.H6(
-                                                    "📡 Fontes de Dados",
+                                                    "📡 Data Sources",
                                                     className="mb-0",
                                                 )
                                             ]
@@ -278,7 +277,7 @@ eto_layout = html.Div(
                                                         html.Strong(
                                                             "Open-Meteo: "
                                                         ),
-                                                        "Dados globais de alta resolução (recomendado)",
+                                                        "High-resolution global data (recommended)",
                                                     ],
                                                     className="small mb-2",
                                                 ),
@@ -287,7 +286,7 @@ eto_layout = html.Div(
                                                         html.Strong(
                                                             "NASA POWER: "
                                                         ),
-                                                        "Dados históricos globais desde 1940",
+                                                        "Global historical data since 1990",
                                                     ],
                                                     className="small mb-0",
                                                 ),
@@ -321,18 +320,18 @@ eto_layout = html.Div(
     ]
 )
 
-logger.info("✅ Página ETo carregada com sucesso")
+logger.info("✅ ETo page loaded successfully")
 
 
-# Funções auxiliares para a página ETo
+# Helper functions for the ETo page
 def create_period_validation_alert(is_valid, message):
     """
-    Cria alerta de validação do período selecionado.
+    Creates validation alert for selected period.
     Args:
-        is_valid (bool): Se o período é válido
-        message (str): Mensagem de validação
+        is_valid (bool): Whether the period is valid
+        message (str): Validation message
     Returns:
-        dbc.Alert: Alerta de validação
+        dbc.Alert: Validation alert
     """
     color = "success" if is_valid else "danger"
     icon = "bi bi-check-circle" if is_valid else "bi bi-exclamation-triangle"
@@ -340,7 +339,7 @@ def create_period_validation_alert(is_valid, message):
         [
             html.I(className=f"{icon} me-2"),
             html.Strong(
-                "Período " + ("válido" if is_valid else "inválido") + ": "
+                ("Valid period: " if is_valid else "Invalid period: ")
             ),
             message,
         ],
@@ -351,21 +350,21 @@ def create_period_validation_alert(is_valid, message):
 
 def create_eto_results_card(results_data):
     """
-    Cria card com os resultados do cálculo ETo.
+    Creates card with ETo calculation results.
     Args:
-        results_data (dict): Dados dos resultados
+        results_data (dict): Results data
     Returns:
-        dbc.Card: Card com resultados
+        dbc.Card: Card with results
     """
     if not results_data:
         return dbc.Alert(
-            "Nenhum resultado disponível. Execute o cálculo primeiro.",
+            "No results available. Please run the calculation first.",
             color="warning",
         )
     return dbc.Card(
         [
             dbc.CardHeader(
-                [html.H6("📊 Resultados do Cálculo ETo", className="mb-0")]
+                [html.H6("📊 ETo Calculation Results", className="mb-0")]
             ),
             dbc.CardBody(
                 [
@@ -375,23 +374,23 @@ def create_eto_results_card(results_data):
                                 [
                                     html.P(
                                         [
-                                            html.Strong("ETo Média: "),
+                                            html.Strong("Average ETo: "),
                                             html.Span(
-                                                f"{results_data.get('eto_mean', 0):.2f} mm/dia",
+                                                f"{results_data.get('eto_mean', 0):.2f} mm/day",
                                                 className="text-success fw-bold",
                                             ),
                                         ]
                                     ),
                                     html.P(
                                         [
-                                            html.Strong("ETo Máxima: "),
-                                            f"{results_data.get('eto_max', 0):.2f} mm/dia",
+                                            html.Strong("Maximum ETo: "),
+                                            f"{results_data.get('eto_max', 0):.2f} mm/day",
                                         ]
                                     ),
                                     html.P(
                                         [
-                                            html.Strong("ETo Mínima: "),
-                                            f"{results_data.get('eto_min', 0):.2f} mm/dia",
+                                            html.Strong("Minimum ETo: "),
+                                            f"{results_data.get('eto_min', 0):.2f} mm/day",
                                         ]
                                     ),
                                 ],
@@ -401,14 +400,14 @@ def create_eto_results_card(results_data):
                                 [
                                     html.P(
                                         [
-                                            html.Strong("Período: "),
-                                            f"{results_data.get('start_date', 'N/A')} a "
+                                            html.Strong("Period: "),
+                                            f"{results_data.get('start_date', 'N/A')} to "
                                             f"{results_data.get('end_date', 'N/A')}",
                                         ]
                                     ),
                                     html.P(
                                         [
-                                            html.Strong("Dias calculados: "),
+                                            html.Strong("Calculated days: "),
                                             str(
                                                 results_data.get(
                                                     "days_count", 0
@@ -418,7 +417,7 @@ def create_eto_results_card(results_data):
                                     ),
                                     html.P(
                                         [
-                                            html.Strong("Fonte: "),
+                                            html.Strong("Source: "),
                                             results_data.get(
                                                 "data_source", "N/A"
                                             ),
@@ -433,9 +432,7 @@ def create_eto_results_card(results_data):
                     html.P(
                         [
                             html.Small(
-                                "Estes valores representam a evapotranspiração de "
-                                "referência (ETo) calculada usando o método "
-                                "Penman-Monteith padrão FAO-56.",
+                                "These values represent the reference evapotranspiration (ETo) calculated using the standard FAO-56 Penman-Monteith method.",
                                 className="text-muted",
                             )
                         ]
@@ -448,20 +445,20 @@ def create_eto_results_card(results_data):
 
 def create_calculation_error_alert(error_message):
     """
-    Cria alerta de erro no cálculo.
+    Creates an error alert for calculation.
     Args:
-        error_message (str): Mensagem de erro
+        error_message (str): Error message
     Returns:
-        dbc.Alert: Alerta de erro
+        dbc.Alert: Error alert
     """
     return dbc.Alert(
         [
             html.I(className="bi bi-exclamation-triangle me-2"),
-            html.Strong("Erro no cálculo: "),
+            html.Strong("Calculation error: "),
             error_message,
             html.Br(),
             html.Small(
-                "Verifique a localização selecionada e tente novamente.",
+                "Please check the selected location and try again.",
                 className="text-muted",
             ),
         ],
@@ -470,4 +467,4 @@ def create_calculation_error_alert(error_message):
     )
 
 
-logger.info("✅ Página ETo carregada com sucesso")
+logger.info("✅ ETo page loaded successfully")

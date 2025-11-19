@@ -150,7 +150,8 @@ async def download_historical_weather_data(
 
                 # Salvar DataFrame original NASA POWER para depuração
                 try:
-                    df_nasa.head(30).to_csv("temp/df_nasa_original_head30.csv")
+                    # df_nasa.head(30).to_csv("temp/df_nasa_original_head30.csv")
+                    df_nasa.to_csv("temp/df_nasa_original_completo_1_ano.csv")
                 except Exception as e:
                     logger.warning(
                         f"Falha ao salvar df_nasa_original_head30.csv: {e}"
@@ -238,8 +239,11 @@ async def download_historical_weather_data(
 
         # Salvar DataFrame original OpenMeteo para depuração
         try:
-            df_openmeteo.head(30).to_csv(
-                "temp/df_openmeteo_original_head30.csv"
+            # df_openmeteo.head(30).to_csv(
+            #     "temp/df_openmeteo_original_head30.csv"
+            # )
+            df_openmeteo.to_csv(
+                "temp/df_openmeteo_original_completo_1_ano.csv"
             )
         except Exception as e:
             logger.warning(
@@ -408,7 +412,6 @@ async def download_historical_weather_data(
                         latitude=latitude,
                         longitude=longitude,
                         measurements=measurements,
-                        date=current_date,
                     )
 
                     # LOG: Resultado bruto do Kalman

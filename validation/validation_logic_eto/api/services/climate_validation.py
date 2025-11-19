@@ -449,7 +449,8 @@ class ClimateValidationService:
             return OperationMode.DASHBOARD_CURRENT.value, None
 
         # Regra 3: HISTORICAL_EMAIL
-        if end <= today - timedelta(days=30) and 1 <= period_days <= 90:
+        # if end <= today - timedelta(days=30) and 1 <= period_days <= 90:
+        if end <= today - timedelta(days=30) and 1 <= period_days <= 12000:
             return OperationMode.HISTORICAL_EMAIL.value, None
 
         # Caso contrário: ambíguo

@@ -37,8 +37,7 @@ home_layout = html.Div(
                                                                     "1.",
                                                                     className="fw-bold me-2",
                                                                 ),
-                                                                "Clique em qualquer ponto do mapa para "
-                                                                "selecionar coordenadas",
+                                                                "Click on any point on the map to select coordinates",
                                                             ]
                                                         ),
                                                         dbc.ListGroupItem(
@@ -50,15 +49,14 @@ home_layout = html.Div(
                                                                     ),
                                                                 ),
                                                                 (
-                                                                    "Use o botão de "
-                                                                    "localização ( "
+                                                                    "Use the location button ( "
                                                                 ),
                                                                 html.Img(
                                                                     src=(
                                                                         "/assets/images/"
                                                                         "geo-location.svg"
                                                                     ),
-                                                                    alt="Localização",
+                                                                    alt="Location",
                                                                     style={
                                                                         "height": "16px",
                                                                         "width": "16px",
@@ -71,8 +69,7 @@ home_layout = html.Div(
                                                                     },
                                                                 ),
                                                                 (
-                                                                    " ) para encontrar "
-                                                                    "sua posição atual"
+                                                                    " ) to find your current position"
                                                                 ),
                                                             ]
                                                         ),
@@ -82,8 +79,7 @@ home_layout = html.Div(
                                                                     "3.",
                                                                     className="fw-bold me-2",
                                                                 ),
-                                                                "Use o controle de camadas (🗺️) para "
-                                                                "visualizar Brasil, MATOPIBA e Cidades",
+                                                                "Use the layer control (🗺️) to view Brazil, MATOPIBA, and Cities",
                                                             ]
                                                         ),
                                                         dbc.ListGroupItem(
@@ -92,7 +88,7 @@ home_layout = html.Div(
                                                                     "4.",
                                                                     className="fw-bold me-2",
                                                                 ),
-                                                                "Clique no botão '(⭐ ADICIONAR)' para adicionar aos favoritos",
+                                                                "Click the '(⭐ ADD)' button to add to favorites",
                                                             ]
                                                         ),
                                                         dbc.ListGroupItem(
@@ -104,14 +100,14 @@ home_layout = html.Div(
                                                                     ),
                                                                 ),
                                                                 (
-                                                                    "Use o botão ("
+                                                                    "Use the button ("
                                                                 ),
                                                                 html.Img(
                                                                     src=(
                                                                         "/assets/images/"
                                                                         "calculator_eto.svg"
                                                                     ),
-                                                                    alt="Calculadora",
+                                                                    alt="Calculator",
                                                                     style={
                                                                         "height": "16px",
                                                                         "width": "16px",
@@ -123,12 +119,10 @@ home_layout = html.Div(
                                                                         ),
                                                                     },
                                                                 ),
-                                                                "CALCULAR ET",
+                                                                "CALCULATE ET",
                                                                 html.Sub("0"),
                                                                 (
-                                                                    ") para "
-                                                                    "ser redirecionado a "
-                                                                    "página de cálculo",
+                                                                    ") to be redirected to the calculation page",
                                                                 ),
                                                             ]
                                                         ),
@@ -136,7 +130,7 @@ home_layout = html.Div(
                                                     flush=True,
                                                 )
                                             ],
-                                            title="📋 Como usar o mapa (clique para expandir)",
+                                            title="📋 How to use the map (click to expand)",
                                         ),
                                     ],
                                     start_collapsed=True,  # Inicia fechado
@@ -176,7 +170,7 @@ home_layout = html.Div(
                                                 html.Div(
                                                     [
                                                         html.H5(
-                                                            "⭐ Favoritos",
+                                                            "⭐ Favorites",
                                                             className="mb-0 d-inline",
                                                         ),
                                                         dbc.Badge(
@@ -196,7 +190,7 @@ home_layout = html.Div(
                                                 html.Div(
                                                     [
                                                         html.H6(
-                                                            "Ações",
+                                                            "Actions",
                                                             className="mb-2",
                                                         ),
                                                         dbc.ButtonGroup(
@@ -206,7 +200,7 @@ home_layout = html.Div(
                                                                         html.I(
                                                                             className="bi bi-star me-2"
                                                                         ),
-                                                                        "Adicionar",
+                                                                        "Add",
                                                                     ],
                                                                     id="add-favorite-btn",
                                                                     color="warning",
@@ -226,7 +220,7 @@ home_layout = html.Div(
                                                                         html.I(
                                                                             className="bi bi-calculator me-2"
                                                                         ),
-                                                                        "Calcular ETo",
+                                                                        "Calculate ETo",
                                                                     ],
                                                                     id="calculate-eto-btn",
                                                                     color="success",
@@ -250,7 +244,7 @@ home_layout = html.Div(
                                                 html.Hr(className="my-2"),
                                                 # Título da lista (fixo)
                                                 html.H6(
-                                                    "Lista",
+                                                    "List",
                                                     className="mb-2",
                                                 ),
                                                 # Container scrollável APENAS para a lista
@@ -267,8 +261,8 @@ home_layout = html.Div(
                                                         ),
                                                         dbc.Alert(
                                                             [
-                                                                "Lista vazia. ",
-                                                                "Clique no mapa para selecionar.",
+                                                                "List empty. ",
+                                                                "Click on the map to select.",
                                                             ],
                                                             color="info",
                                                             id="empty-favorites-alert",

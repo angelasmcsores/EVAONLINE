@@ -310,7 +310,7 @@ class UserRequestSimulator:
         self,
         cities: Optional[List[str]] = None,
         start_date: str = "1991-01-01",
-        end_date: str = "1991-12-31",
+        end_date: str = "2020-12-31",
         max_cities: Optional[int] = None,
     ) -> pd.DataFrame:
         """
@@ -387,14 +387,14 @@ class UserRequestSimulator:
 
         # Summary statistics
         success_count = df_results["success"].sum()
-        logger.info(f"   Success rate: {success_count}/{len(cities)}")
+        logger.info(f"Success rate: {success_count}/{len(cities)}")
 
         if "eto_mae" in df_results.columns:
             logger.info(
                 f"   Average MAE: "
                 f"{df_results['eto_mae'].mean():.3f} mm/day"
             )
-            logger.info(f"   Average R²: {df_results['eto_r2'].mean():.3f}")
+            logger.info(f"Average R²: {df_results['eto_r2'].mean():.3f}")
 
         logger.info(f"{'='*70}\n")
 
@@ -410,7 +410,7 @@ async def main():
     result = await simulator.simulate_user_click(
         city_name="Alvorada_do_Gurgueia_PI",
         start_date="1991-01-01",
-        end_date="1991-12-31",
+        end_date="2020-12-31",
     )
 
     print("\n" + "=" * 70)
