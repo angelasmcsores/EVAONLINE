@@ -1,0 +1,78 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+type: dataset
+title: "EVAonline Validation Dataset: Kalman Fusion System for Reference Evapotranspiration in Brazil (2017-2024)"
+version: 1.0.0
+date-released: 2025-11-21
+url: "https://github.com/angelasilviane/EVAONLINE"
+repository-code: "https://github.com/angelasilviane/EVAONLINE"
+license: AGPL-3.0-or-later
+keywords:
+  - reference evapotranspiration
+  - FAO-56 Penman-Monteith
+  - Kalman filter
+  - data fusion
+  - MATOPIBA
+  - Brazil
+  - open-source
+  - reanalysis
+  - climate data
+  - agricultural modeling
+authors:
+  - family-names: "Silviane"
+    given-names: "Angela"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+    affiliation: "Universidade Federal do Tocantins"
+    email: "angelasilviane@uft.edu.br"
+  # Add more authors here
+abstract: >-
+  This dataset contains the complete validation results for EVAOnline, 
+  an open-source Kalman fusion system for reference evapotranspiration (ETo) 
+  estimation in Brazil. The dataset includes daily ETo values from four sources:
+  (1) Xavier et al. reference data (1961-2024), (2) NASA POWER reanalysis,
+  (3) Open-Meteo Archive, and (4) EVAOnline Kalman fusion results.
+  Data covers 17 Brazilian cities in the MATOPIBA region (2017-2024),
+  totaling over 186,000 daily observations. EVAOnline demonstrates superior
+  performance with Mean Absolute Error of 0.48 mm/day and near-zero bias (0.6%),
+  compared to NASA POWER (MAE=1.09 mm/day, PBIAS=23.2%) and Open-Meteo
+  (MAE=0.67 mm/day, PBIAS=8.8%). The repository includes raw data, validation
+  scripts, statistical analyses, and reproducible Jupyter notebooks.
+references:
+  - type: article
+    authors:
+      - family-names: "Xavier"
+        given-names: "Alexandre Candido"
+      - family-names: "King"
+        given-names: "Carey W."
+      - family-names: "Scanlon"
+        given-names: "Bridget R."
+    title: "Daily gridded meteorological variables in Brazil (1980-2013)"
+    journal: "International Journal of Climatology"
+    year: 2016
+    volume: 36
+    issue: 6
+    pages: "2644-2659"
+    doi: "10.1002/joc.4518"
+    url: "https://sites.google.com/site/alexandrecandidoxavierufes/brazilian-daily-weather-gridded-data"
+  - type: article
+    authors:
+      - family-names: "Xavier"
+        given-names: "Alexandre Candido"
+      - family-names: "Scanlon"
+        given-names: "Bridget R."
+      - family-names: "King"
+        given-names: "Carey W."
+    title: "An update of Xavier, Scanlon, and King (2016) daily precipitation gridded data set for the Brazil"
+    journal: "International Journal of Climatology"
+    year: 2022
+    volume: 42
+    issue: 16
+    pages: "9248-9259"
+    doi: "10.1002/joc.7731"
+    url: "https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.7731"
+  - type: manual
+    title: "FAO Irrigation and Drainage Paper No. 56: Crop evapotranspiration"
+    authors:
+      - name: "Food and Agriculture Organization of the United Nations"
+    year: 1998
+    url: "http://www.fao.org/3/x0490e/x0490e00.htm"

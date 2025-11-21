@@ -1,0 +1,103 @@
+{
+    "title": "EVAOnline Validation Dataset: Kalman Fusion System for Reference Evapotranspiration in Brazil (2017-2024)",
+    "description": "Complete validation dataset for EVAOnline, an open-source Kalman fusion system for reference evapotranspiration (ETo) estimation. Includes daily ETo values from four sources: (1) Xavier et al. reference data (1961-2024), (2) NASA POWER reanalysis, (3) Open-Meteo Archive, and (4) EVAOnline Kalman fusion results. Data covers 17 Brazilian cities in the MATOPIBA region with over 186,000 daily observations. EVAOnline demonstrates MAE=0.48 mm/day and PBIAS=0.6%, outperforming NASA POWER (MAE=1.09, PBIAS=23.2%) and Open-Meteo (MAE=0.67, PBIAS=8.8%).",
+    "version": "1.0.0",
+    "upload_type": "dataset",
+    "access_right": "open",
+    "license": "AGPL-3.0-or-later",
+    "keywords": [
+        "reference evapotranspiration",
+        "FAO-56 Penman-Monteith",
+        "Kalman filter",
+        "data fusion",
+        "MATOPIBA",
+        "Brazil",
+        "agricultural modeling",
+        "open-source",
+        "reanalysis",
+        "climate data",
+        "ensemble methods",
+        "bias correction",
+        "NASA POWER",
+        "Open-Meteo",
+        "Xavier dataset"
+    ],
+    "creators": [
+        {
+            "name": "Silviane, Angela",
+            "affiliation": "Universidade Federal do Tocantins",
+            "orcid": "0000-0000-0000-0000"
+        }
+    ],
+    "contributors": [],
+    "references": [
+        "Xavier, A. C., King, C. W., & Scanlon, B. R. (2016). Daily gridded meteorological variables in Brazil (1980-2013). International Journal of Climatology, 36(6), 2644-2659. https://doi.org/10.1002/joc.4518",
+        "Xavier, A. C., Scanlon, B. R., & King, C. W. (2022). An update of Xavier, Scanlon, and King (2016) daily precipitation gridded data set for the Brazil. International Journal of Climatology, 42(16), 9248-9259. https://doi.org/10.1002/joc.7731 | https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.7731",
+        "Allen, R. G., Pereira, L. S., Raes, D., & Smith, M. (1998). Crop evapotranspiration: Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper No. 56. Rome: Food and Agriculture Organization of the United Nations.",
+        "Xavier, A. C. Brazilian Daily Weather Gridded Data. Available at: https://sites.google.com/site/alexandrecandidoxavierufes/brazilian-daily-weather-gridded-data"
+    ],
+    "related_identifiers": [
+        {
+            "identifier": "https://github.com/angelasilviane/EVAONLINE",
+            "relation": "isSupplementTo",
+            "scheme": "url"
+        },
+        {
+            "identifier": "https://sites.google.com/site/alexandrecandidoxavierufes/brazilian-daily-weather-gridded-data",
+            "relation": "isReferencedBy",
+            "scheme": "url"
+        },
+        {
+            "identifier": "10.1002/joc.4518",
+            "relation": "cites",
+            "scheme": "doi"
+        },
+        {
+            "identifier": "10.1002/joc.7731",
+            "relation": "cites",
+            "scheme": "doi"
+        },
+        {
+            "identifier": "https://power.larc.nasa.gov/",
+            "relation": "isReferencedBy",
+            "scheme": "url"
+        },
+        {
+            "identifier": "https://open-meteo.com/en/docs/historical-weather-api",
+            "relation": "isReferencedBy",
+            "scheme": "url"
+        }
+    ],
+    "subjects": [
+        {
+            "term": "Hydrology",
+            "scheme": "url",
+            "identifier": "http://id.loc.gov/authorities/subjects/sh85063455"
+        },
+        {
+            "term": "Evapotranspiration",
+            "scheme": "url",
+            "identifier": "http://id.loc.gov/authorities/subjects/sh85046087"
+        },
+        {
+            "term": "Agricultural meteorology",
+            "scheme": "url",
+            "identifier": "http://id.loc.gov/authorities/subjects/sh85002334"
+        }
+    ],
+    "communities": [
+        {
+            "identifier": "zenodo"
+        }
+    ],
+    "grants": [],
+    "language": "eng",
+    "locations": [
+        {
+            "lat": -9.0,
+            "lon": -47.0,
+            "place": "MATOPIBA Region, Brazil"
+        }
+    ],
+    "method": "Daily ETo calculated using FAO-56 Penman-Monteith equation. Kalman fusion combines NASA POWER (MERRA-2 reanalysis, 0.5° resolution) and Open-Meteo (ERA5-Land reanalysis, ~9 km resolution) data with dynamic bias correction and covariance estimation. Validation against Xavier et al. reference dataset (0.25° resolution, 3,625+ weather stations) using Brazil-specific limits (Temperature: -30 to 50°C, Precipitation: 0-450mm, Radiation: 0-40 MJ/m², Wind: 0-100 m/s). NASA POWER data accessed via API (https://power.larc.nasa.gov/api/), Open-Meteo via Historical Weather API (https://open-meteo.com/en/docs/historical-weather-api)."
+}
